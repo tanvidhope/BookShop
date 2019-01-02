@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -11,7 +11,7 @@ from books.forms import UserForm
 from books.views import UserApi
 
 
-def Login(request):
+def log_in(request):
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -24,3 +24,8 @@ def Login(request):
     else:
         login_form = UserForm()
         return render(request,'home.html',{"login_form":login_form})
+
+
+def log_out(request):
+        logout(request)
+        return redirect(request,'home.html')

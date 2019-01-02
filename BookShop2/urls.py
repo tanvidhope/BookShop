@@ -22,8 +22,10 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', log_in, name='home'),
     path('books/', views.BookList.as_view(),name="books"),
     path('cart', views.CartView.as_view(),name="cart"),
     # path('login/',name="login"),
+     path('logout/',log_out, name='logout'),
+    path('add/', views.AddToCart.as_view(),name="addbook"),
 ]

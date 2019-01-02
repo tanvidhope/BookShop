@@ -76,16 +76,6 @@ class CartView(APIView):
 '''''''''''
 
 
-class RegisterUserForm(APIView):
-    form_class = UserForm
-    template_name = 'registrationForm.html'
-
-    def get(self):
-        form = self.form_class(None)
-
-        return render(self, self.template_name, {'form': form})
-
-
 class UserApi(APIView):
     def post(self,request):
         json_data = json.loads(request.body)
@@ -111,6 +101,23 @@ class UserApi(APIView):
                 user = authenticate(username=username, password=password)
 '''
 
-#class AddToCart(APIView):
- #   def post(self,request):
-  #git      if
+class AddToCart(APIView):
+    def post(self,request):
+        if request.user.is_authenticated:
+            book = request.POST['book']
+            # book = Book.objects.get(pk=id)
+            cart = Cart.objects.get(user=request.user)
+            cart.books.add(book)
+            cart.save()
+            serializer = CartSerializer(cart, many=True)
+            return Response(serializer.data,status=200)
+        else:
+            return Response(status=403)
+
+    def get(self,request):
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)
+
+    #def addCartView(self):
+
