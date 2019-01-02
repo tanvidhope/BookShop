@@ -23,7 +23,7 @@ def log_in(request):
             return HttpResponse("Error logging in")
     else:
         login_form = UserForm()
-        return render(request,'home.html',{"login_form":login_form})
+        return render(request,'registration/login.html',{"form":login_form})
 
 
 def log_out(request):
