@@ -17,8 +17,5 @@ class Book(models.Model):
 
 
 class Cart(models.Model):
-        user = models.ForeignKey(User, on_delete=models.CASCADE)
-        books = models.ManyToManyField(Book)
-
-        def __str__(self):
-            return "%s's cart"% self.user
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book)

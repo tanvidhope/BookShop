@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username','password')
 
+
 class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -19,4 +20,4 @@ class BookSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ('user','books')
+        fields = ('books',)

@@ -24,9 +24,9 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', log_in, name='home'),
-    path('books/', list_books, name="books"), # views.BookList.as_view() for api view(json object)
+    path('books/', BookList.as_view(), name="books"), # views.BookList.as_view() for api view(json object)
     path('cart', views.CartView.as_view(),name="cart"),
     path('login/',log_in,name="login"),
-     path('logout/',log_out, name='logout'),
-    path('add/', views.AddToCart.as_view(),name="addbook"),
+    path('logout/',log_out, name='logout'),
+    path('add/<int:pk>/', views.AddToCart.as_view(),name="addbook"),
 ]

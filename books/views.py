@@ -42,8 +42,8 @@ class BookList(APIView):
     def post(self, request):
         serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        	serializer.save()
+        	return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CartView(APIView):
@@ -52,13 +52,11 @@ class CartView(APIView):
     # serializer_class = CartSerializer
     def get(self,request):
         # user = authenticate(username=request.username, password=request.password)
-        if request.user.is_authenticated:
-        #if user is not None:
-            cart = Cart.objects.filter(user=request.user)
-            serializer = CartSerializer(cart, many=True)
-            return Response(serializer.data)
-        else:
-            return HttpResponse(status=403)
+        # if request.user.is_authenticated:
+        # if user is not None:
+        cart = Cart.objects.filter(id=1)
+        serializer = CartSerializer(cart, many=True)
+        return Response(serializer.data)
 
     def post(self):
         pass
@@ -101,22 +99,21 @@ class UserApi(APIView):
                 user = authenticate(username=username, password=password)
 '''
 
-class AddToCart(APIView):
-    def post(self,request):
-        if request.user.is_authenticated:
-            book = request.POST['book']
-            # book = Book.objects.get(pk=id)
-            cart = Cart.objects.get(user=request.user)
-            cart.books.add(book)
-            cart.save()
-            serializer = CartSerializer(cart, many=True)
-            return Response(serializer.data,status=200)
-        else:
-            return Response(status=403)
 
-    def get(self,request):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
+class AddToCart(APIView):
+    def post(self,request,pk):
+        book = Book.objects.get(id=pk)
+        # book = Book.objects.get(pk=id)
+        cart = Cart.objects.get(id=1)
+        print(cart)
+        cart.books.add(book)
+        # cart.save()
+        # serializer = CartSerializer(cart, many=True)
+        # return Response(serializer.data,status=200)
+
+    def get(self,request, pk):
+        book = Book.objects.filter(id=pk)
+        serializer = BookSerializer(book, many=True)
         return Response(serializer.data)
 
     #def addCartView(self):

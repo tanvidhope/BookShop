@@ -15,7 +15,7 @@ def log_in(request):
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']
-        user = UserApi({"username":username,"passowrd":password})
+        user = UserApi(request)
         if user is not None:
             login(request,user)
             return redirect('home.html')
